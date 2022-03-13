@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 import joblib
 from sklearn.ensemble import RandomForestClassifier
-from predict import get_prediction, ordinal_encoder, explain_model_prediction
+from predict import get_prediction, ordinal_encoder
 from PIL import Image
 image = Image.open('Img/rta_img.jpg')
 

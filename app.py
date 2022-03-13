@@ -7,7 +7,7 @@ import joblib
 from sklearn.ensemble import RandomForestClassifier
 from predict import get_prediction, ordinal_encoder
 
-model = joblib.load(r'RF_RTA02.joblib')
+model = joblib.load(r'Model/RF_RTA02.pkl')
 
 st.set_page_config(page_title="Deep's Road Traffic Accident Severity Prediction",
                    page_icon="🚦", layout="wide")

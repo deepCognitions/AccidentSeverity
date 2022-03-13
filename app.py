@@ -79,7 +79,7 @@ def main():
 
         pred = get_prediction(data=data, model=model)
 
-        st.markdown("""<style> .big-font { font-size:100px !important; } </style> """, unsafe_allow_html=True)
+        st.markdown("""<style> .big-font { font-family:sans-serif; color:Grey; font-size: 50px; } </style> """, unsafe_allow_html=True)
         st.markdown(f'<p class="big-font">{pred} is predicted.</p>', unsafe_allow_html=True)
         #st.write(f" => {pred} is predicted. <=")
 

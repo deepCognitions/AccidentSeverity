@@ -6,11 +6,16 @@ import numpy as np
 import joblib
 from sklearn.ensemble import RandomForestClassifier
 from predict import get_prediction, ordinal_encoder
+from PIL import Image
+image = Image.open('Img/rta_img.jpg')
+
+
 
 model = joblib.load(r'Model/RF_RTA02.pkl')
-
 st.set_page_config(page_title="Deep's Road Traffic Accident Severity Prediction",
                    page_icon="🚦", layout="wide")
+st.image(image, caption='RTA')
+
 
 
 #creating option list for dropdown menu

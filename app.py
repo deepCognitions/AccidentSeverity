@@ -79,7 +79,9 @@ def main():
 
         pred = get_prediction(data=data, model=model)
 
-        st.write(f" => {pred} is predicted. <=")
+        st.markdown("""<style> .big-font { font-size:100px !important; } </style> """, unsafe_allow_html=True)
+        st.markdown(f'<p class="big-font">{pred} is predicted.</p>', unsafe_allow_html=True)
+        #st.write(f" => {pred} is predicted. <=")
 
 if __name__ == '__main__':
     main()

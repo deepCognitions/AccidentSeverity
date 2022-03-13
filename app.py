@@ -48,23 +48,28 @@ st.markdown("<h1 style='text-align: center;'>Road Traffic Accident Severity App 
 def main():
     with st.form('prediction_form'):
 
-        st.subheader("Enter the input for following features:")
+        st.subheader("Enter the input for following info:")
+
+        col1, col2 = st.columns(2)
+
+        with col1:
       
-        hour = st.slider("Accident Hour: ", 0, 23, value=0, format="%d")
-        casualty_age = st.selectbox("Casualty Age: ", options=options_cage)
-        casualties = st.slider("No. of Casualties: ", 1, 8, value=0, format="%d")
-        collision = st.selectbox("Select Accident Cause: ", options=options_collision)
-        vehicles_involved = st.slider("Vehicles involved: ", 1, 7, value=0, format="%d")
-        light_con = st.selectbox("Light condition: ", options=options_lcon)
-        vd_relation = st.selectbox("Vehicle-Driver relation: ", options=options_vd_relation)
-        driver_age = st.selectbox("Driver Age: ", options=options_dage)
-        accident_area = st.selectbox("Accident Area: ", options=options_acc_area)
-        driving_experience = st.selectbox("Select Driving Experience: ", options=options_driver_exp)
-        lanes = st.selectbox("Lanes: ", options=options_lanes)
-        roadsurface_type = st.selectbox("Select Vehicle Type: ", options=options_rsurface_type)
+            hour = st.slider("Accident Hour: ", 0, 23, value=0, format="%d")
+            casualty_age = st.selectbox("Casualty Age: ", options=options_cage)
+            casualties = st.slider("No. of Casualties: ", 1, 8, value=0, format="%d")
+            collision = st.selectbox("Select Accident Cause: ", options=options_collision)
+            vehicles_involved = st.slider("Vehicles involved: ", 1, 7, value=0, format="%d")
+            light_con = st.selectbox("Light condition: ", options=options_lcon)
+        with col2:
+            vd_relation = st.selectbox("Vehicle-Driver relation: ", options=options_vd_relation)
+            driver_age = st.selectbox("Driver Age: ", options=options_dage)
+            accident_area = st.selectbox("Accident Area: ", options=options_acc_area)
+            driving_experience = st.selectbox("Select Driving Experience: ", options=options_driver_exp)
+            lanes = st.selectbox("Lanes: ", options=options_lanes)
+            roadsurface_type = st.selectbox("Select Vehicle Type: ", options=options_rsurface_type)
         
         
-        submit = st.form_submit_button("Predict")
+        submit = st.form_submit_button("Predict the Severity")
 
 
     if submit:

@@ -15,12 +15,12 @@ image = Image.open('Img/rta_img.jpg')
 
 model = joblib.load(r'Model/RF_RTA02.pkl')
 with open('Model/RF_RTA02.pkl', 'rb') as handle:
-    d, features_selected, clf, explainer = pickle.load(handle)
+    dfce = pickle.load(handle)
 
 def explain_model_prediction(data):
         # Calculate Shap values
-        shap_values = explainer.shap_values(data)
-        p = shap.force_plot(explainer.expected_value[1], shap_values[1], data)
+        shap_values = dfce[3].shap_values(data)
+        p = shap.force_plot(dfce[3].expected_value[1], shap_values[1], data)
         return p, shap_values
 st.set_page_config(page_title="Deep's Road Traffic Accident Severity Prediction",
                    page_icon="🚦", layout="wide")
@@ -104,7 +104,7 @@ def main():
         st.markdown(f'<p class="big-font">{pred} is predicted.</p>', unsafe_allow_html=True)
         #st.write(f" => {pred} is predicted. <=")
 
-        p, shap_values = explain_model_prediction(results)
+        p, shap_values = explain_model_prediction(data)
         st.subheader('Severity Prediction Interpretation Plot')
         st_shap(p)
 

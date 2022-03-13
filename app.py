@@ -14,7 +14,7 @@ image = Image.open('Img/rta_img.jpg')
 
 
 model = joblib.load(r'Model/RF_RTA02.pkl')
-with open('Img/rta_img.jpg', 'rb') as handle:
+with open('Model/RF_RTA02.pkl', 'rb') as handle:
     d, features_selected, clf, explainer = pickle.load(handle)
 
 def explain_model_prediction(data):

@@ -14,7 +14,7 @@ image = Image.open('Img/rta_img.jpg')
 model = joblib.load(r'Model/RF_RTA02.pkl')
 st.set_page_config(page_title="Deep's Road Traffic Accident Severity Prediction",
                    page_icon="🚦", layout="wide")
-st.image(image, caption='RTA',width=1920)
+st.image(image, caption='RTA',width=1000)
 
 
 

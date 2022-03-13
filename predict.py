@@ -13,5 +13,12 @@ def ordinal_encoder(input_val, feats):
 
 def get_prediction(data,model):
     target=['Slight Injury','Serious Injury','Fatal injury']
-    res = target[(model.predict(data)).astype('int64')]
-    return res
+    res = model.predict(data)
+    if res =='0':
+        pred=target[0]
+    elif res == '1':
+        pred=target[1]
+    else:
+        pred=target[2]
+
+    return pred

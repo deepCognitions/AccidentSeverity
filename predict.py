@@ -14,11 +14,6 @@ def ordinal_encoder(input_val, feats):
 def get_prediction(data,model):
     target=['Slight Injury','Serious Injury','Fatal injury']
     res = model.predict(data)
-    if res ==2:
-        pred=target[0]
-    elif res == '2':
-        pred=target[1]
-    else:
-        pred=target[2]
+    
 
-    return pred
+    return target[res]

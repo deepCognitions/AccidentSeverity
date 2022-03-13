@@ -1,17 +1,27 @@
 from heapq import heappop
 from shutil import move
 import streamlit as st
+import shap
+import pickle
 import pandas as pd
 import numpy as np
 import joblib
 from sklearn.ensemble import RandomForestClassifier
-from predict import get_prediction, ordinal_encoder
+from predict import get_prediction, ordinal_encoder, explain_model_prediction
 from PIL import Image
 image = Image.open('Img/rta_img.jpg')
 
 
 
 model = joblib.load(r'Model/RF_RTA02.pkl')
+with open('Img/rta_img.jpg', 'rb') as handle:
+    d, features_selected, clf, explainer = pickle.load(handle)
+
+def explain_model_prediction(data):
+        # Calculate Shap values
+        shap_values = explainer.shap_values(data)
+        p = shap.force_plot(explainer.expected_value[1], shap_values[1], data)
+        return p, shap_values
 st.set_page_config(page_title="Deep's Road Traffic Accident Severity Prediction",
                    page_icon="🚦", layout="wide")
 st.image(image, caption='RTA',width=1000)
@@ -71,6 +81,7 @@ def main():
         
         submit = st.form_submit_button("Predict the Severity")
 
+    
 
     if submit:
         light_con = ordinal_encoder(light_con, options_lcon)
@@ -92,6 +103,10 @@ def main():
         st.markdown("""<style> .big-font { font-family:sans-serif; color:Grey; font-size: 50px; } </style> """, unsafe_allow_html=True)
         st.markdown(f'<p class="big-font">{pred} is predicted.</p>', unsafe_allow_html=True)
         #st.write(f" => {pred} is predicted. <=")
+
+        p, shap_values = explain_model_prediction(results)
+        st.subheader('Severity Prediction Interpretation Plot')
+        st_shap(p)
 
 if __name__ == '__main__':
     main()

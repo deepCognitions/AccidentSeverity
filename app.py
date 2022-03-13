@@ -32,7 +32,7 @@ options_driver_exp = ['5-10yr', '2-5yr', 'Above 10yr', '1-2yr', 'Below 1yr', 'No
 options_lanes = ['Two-way (divided with broken lines road marking)', 'Undivided Two way',
        'other', 'Double carriageway (median)', 'One way', 'Two-way (divided with solid lines road marking)']
 
-target=['Slight Injury','Serious Injury','Fatal injury']
+
     
 
 Features = ['Age_band_of_driver', 'Number_of_casualties' ,'Area_accident_occured', 'Lanes_or_Medians','Time', 'Vehicle_driver_relation',
@@ -79,7 +79,7 @@ def main():
 
         pred = get_prediction(data=data, model=model)
 
-        st.write(f" => {target[pred]} is predicted. <=")
+        st.write(f" => {pred} is predicted. <=")
 
 if __name__ == '__main__':
     main()

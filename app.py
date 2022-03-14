@@ -6,6 +6,7 @@ import pickle
 import pandas as pd
 import numpy as np
 import joblib
+import streamlit.components.v1 as components
 from sklearn.ensemble import RandomForestClassifier
 from predict import get_prediction, ordinal_encoder
 from PIL import Image
@@ -16,8 +17,8 @@ image = Image.open('Img/rta_img.jpg')
 model = joblib.load(r'Model/RF_RTA02.pkl')
 #with open('Model/RF_RTA02.pkl', 'rb') as handle:
 #    dfce = pickle.load(handle)
-shap.initjs()
-dfce=shap.TreeExplainer(model)
+#shap.initjs()
+dfce = shap.TreeExplainer(model)
       
 
 def explain_model_prediction(data):

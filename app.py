@@ -107,14 +107,14 @@ def main():
         inp["Driving_experience"] = ordinal_encoder(inp["Driving_experience"], options_driver_exp) 
         inp["Lanes_or_Medians"] = ordinal_encoder(inp["Lanes_or_Medians"], options_lanes)
 
-        df = pd.DataFrame.from_dict(inp)
+        df = pd.DataFrame.from_dict([inp])
         pred = get_prediction(data=df, model=model)
 
         st.markdown("""<style> .big-font { font-family:sans-serif; color:Grey; font-size: 50px; } </style> """, unsafe_allow_html=True)
         st.markdown(f'<p class="big-font">{pred} is predicted.</p>', unsafe_allow_html=True)
         #st.write(f" => {pred} is predicted. <=")
 
-        p, shap_values = explain_model_prediction(inp,dfce)
+        p, shap_values = explain_model_prediction(df,dfce)
         st.subheader('Severity Prediction Interpretation Plot')
         st_shap(p)
 

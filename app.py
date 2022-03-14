@@ -10,6 +10,8 @@ import streamlit.components.v1 as components
 from sklearn.ensemble import RandomForestClassifier
 from predict import get_prediction, ordinal_encoder
 from PIL import Image
+import matplotlib.pyplot as plt
+
 image = Image.open('Img/rta_img.jpg')
 
 
@@ -110,7 +112,12 @@ def main():
 
         p, shap_values = explain_model_prediction(data,dfce)
         st.subheader('Severity Prediction Interpretation Plot')
-        st.shap(p)
+        st_shap(p)
+
+        st.subheader('Summary Plot')
+        fig, ax = plt.subplots(nrows=1, ncols=1)
+        shap.summary_plot(shap_values[1], results)
+        st.pyplot(fig)
 
 if __name__ == '__main__':
     main()

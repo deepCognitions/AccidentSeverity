@@ -61,8 +61,8 @@ options_lanes = ['Two-way (divided with broken lines road marking)', 'Undivided 
 
     
 
-Features = ['Age_band_of_driver', 'Number_of_casualties' ,'Area_accident_occured', 'Lanes_or_Medians','Time', 'Vehicle_driver_relation',
-    'Road_surface_type','Driving_experience', 'Age_band_of_casualty', 'Light_conditions', 'Type_of_collision', 'Number_of_vehicles_involved']
+Features = ['Time','Age_band_of_driver', 'Vehicle_driver_relation','Driving_experience','Area_accident_occured', 'Lanes_or_Medians',
+'Road_surface_type', 'Light_conditions',  'Type_of_collision','Number_of_vehicles_involved', 'Number_of_casualties' , 'Age_band_of_casualty']
 
 
 st.markdown("<h1 style='text-align: center;'>Road Traffic Accident Severity App 🚦</h1>", unsafe_allow_html=True)
@@ -75,19 +75,21 @@ def main():
 
         with col1:
       
-            hour = st.slider("Accident Hour: ", 0, 23, value=0, format="%d")
-            casualty_age = st.selectbox("Casualty Age: ", options=options_cage)
-            casualties = st.slider("No. of Casualties: ", 1, 8, value=0, format="%d")
-            collision = st.selectbox("Select Accident Cause: ", options=options_collision)
-            vehicles_involved = st.slider("Vehicles involved: ", 1, 7, value=0, format="%d")
-            light_con = st.selectbox("Light condition: ", options=options_lcon)
+            inp = {}
+            
+            inp["Time"] = st.slider("Accident Hour: ", 0, 23, value=0, format="%d")
+            inp["Age_band_of_driver"] = st.selectbox("Driver Age: ", options=options_dage)
+            inp["Vehicle_driver_relation"] = st.selectbox("Vehicle-Driver relation: ", options=options_vd_relation)
+            inp["Driving_experience"] = st.selectbox("Select Driving Experience: ", options=options_driver_exp)
+            inp["Area_accident_occured"] = st.selectbox("Accident Area: ", options=options_acc_area)
+            inp["Lanes_or_Medians"] = st.selectbox("Lanes: ", options=options_lanes)
         with col2:
-            vd_relation = st.selectbox("Vehicle-Driver relation: ", options=options_vd_relation)
-            driver_age = st.selectbox("Driver Age: ", options=options_dage)
-            accident_area = st.selectbox("Accident Area: ", options=options_acc_area)
-            driving_experience = st.selectbox("Select Driving Experience: ", options=options_driver_exp)
-            lanes = st.selectbox("Lanes: ", options=options_lanes)
-            roadsurface_type = st.selectbox("Select Vehicle Type: ", options=options_rsurface_type)
+            inp["Road_surface_type"] = st.selectbox("Road Surface Type: ", options=options_rsurface_type)
+            inp["Light_conditions"] = st.selectbox("Light conditions: ", options=options_lcon)
+            inp["Type_of_collision"] = st.selectbox("Type of Collision: ", options=options_collision)
+            inp["Number_of_vehicles_involved"] = st.slider("Vehicles involved: ", 1, 7, value=0, format="%d")
+            inp["Number_of_casualties"] = st.slider("No. of Casualties: ", 1, 8, value=0, format="%d")
+            inp["Age_band_of_casualty"] = st.selectbox("Casualty Age: ", options=options_cage)
         
         
         submit = st.form_submit_button("Predict the Severity")
@@ -95,27 +97,24 @@ def main():
     
 
     if submit:
-        light_con = ordinal_encoder(light_con, options_lcon)
-        collision = ordinal_encoder(collision, options_collision)
-        rsurface_type = ordinal_encoder(roadsurface_type, options_rsurface_type)
-        relation = ordinal_encoder(vd_relation, options_vd_relation)
-        driver_age =  ordinal_encoder(driver_age, options_dage)
-        casualty_age =  ordinal_encoder(casualty_age, options_cage)
-        accident_area =  ordinal_encoder(accident_area, options_acc_area)
-        driving_experience = ordinal_encoder(driving_experience, options_driver_exp) 
-        lanes = ordinal_encoder(lanes, options_lanes)
+        inp["Light_conditions"] = ordinal_encoder(inp["Light_conditions"], options_lcon)
+        inp["Type_of_collision"] = ordinal_encoder(inp["Type_of_collision"], options_collision)
+        inp["Road_surface_type"] = ordinal_encoder(inp["Road_surface_type"], options_rsurface_type)
+        inp["Vehicle_driver_relation"] = ordinal_encoder(inp["Vehicle_driver_relation"], options_vd_relation)
+        inp["Age_band_of_driver"] =  ordinal_encoder(inp["Age_band_of_driver"], options_dage)
+        inp["Age_band_of_casualty"] =  ordinal_encoder(inp["Age_band_of_casualty"], options_cage)
+        inp["Area_accident_occured"] =  ordinal_encoder(inp["Area_accident_occured"], options_acc_area)
+        inp["Driving_experience"] = ordinal_encoder(inp["Driving_experience"], options_driver_exp) 
+        inp["Lanes_or_Medians"] = ordinal_encoder(inp["Lanes_or_Medians"], options_lanes)
 
-
-        data = np.array([driver_age,casualties,accident_area,lanes,hour,relation, 
-                            rsurface_type,driving_experience,casualty_age,light_con,collision,vehicles_involved]).reshape(1,-1)
-
-        pred = get_prediction(data=data, model=model)
+        
+        pred = get_prediction(data=inp, model=model)
 
         st.markdown("""<style> .big-font { font-family:sans-serif; color:Grey; font-size: 50px; } </style> """, unsafe_allow_html=True)
         st.markdown(f'<p class="big-font">{pred} is predicted.</p>', unsafe_allow_html=True)
         #st.write(f" => {pred} is predicted. <=")
 
-        p, shap_values = explain_model_prediction(data,dfce)
+        p, shap_values = explain_model_prediction(inp,dfce)
         st.subheader('Severity Prediction Interpretation Plot')
         st_shap(p)
 

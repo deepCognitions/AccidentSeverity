@@ -28,6 +28,11 @@ def explain_model_prediction(data,dfce):
         shap_values = dfce.shap_values(data)
         p = shap.force_plot(dfce.expected_value[1], shap_values[1], data)
         return p, shap_values
+
+def st_shap(plot, height=None):
+    shap_html = f"<head>{shap.getjs()}</head><body>{plot.html()}</body>"
+    components.html(shap_html, height=height)
+
 st.set_page_config(page_title="Deep's Road Traffic Accident Severity Prediction",
                    page_icon="🚦", layout="wide")
 st.image(image, caption='RTA',width=1000)
@@ -114,10 +119,10 @@ def main():
         st.subheader('Severity Prediction Interpretation Plot')
         st_shap(p)
 
-        st.subheader('Summary Plot')
+        '''st.subheader('Summary Plot')
         fig, ax = plt.subplots(nrows=1, ncols=1)
         shap.summary_plot(shap_values[1], results)
-        st.pyplot(fig)
+        st.pyplot(fig)'''
 
 if __name__ == '__main__':
     main()

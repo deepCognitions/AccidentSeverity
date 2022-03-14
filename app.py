@@ -35,7 +35,7 @@ def st_shap(plot, height=None):
 
 st.set_page_config(page_title="Deep's Road Traffic Accident Severity Prediction",
                    page_icon="🚦", layout="wide")
-st.image(image, caption='RTA',width=1000)
+st.image(image, caption='RTA',width=90%)
 
 
 
@@ -119,10 +119,6 @@ def main():
         st.subheader('Severity Prediction Interpretation Plot')
         st_shap(p)
 
-        '''st.subheader('Summary Plot')
-        fig, ax = plt.subplots(nrows=1, ncols=1)
-        shap.summary_plot(shap_values[1], results)
-        st.pyplot(fig)'''
 
 if __name__ == '__main__':
     main()

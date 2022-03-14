@@ -16,6 +16,7 @@ image = Image.open('Img/rta_img.jpg')
 model = joblib.load(r'Model/RF_RTA02.pkl')
 #with open('Model/RF_RTA02.pkl', 'rb') as handle:
 #    dfce = pickle.load(handle)
+shap.initjs()
 dfce=shap.TreeExplainer(model)
       
 

@@ -21,7 +21,7 @@ model = joblib.load(r'Model/RF_RTA02.pkl')
 dfce = shap.TreeExplainer(model)
       
 
-def explain_model_prediction(data):
+def explain_model_prediction(data,dfce):
         # Calculate Shap values
         shap_values = dfce.shap_values(data)
         p = shap.force_plot(dfce.expected_value[1], shap_values[1], data)
@@ -108,7 +108,7 @@ def main():
         st.markdown(f'<p class="big-font">{pred} is predicted.</p>', unsafe_allow_html=True)
         #st.write(f" => {pred} is predicted. <=")
 
-        p, shap_values = explain_model_prediction(data)
+        p, shap_values = explain_model_prediction(data,dfce)
         st.subheader('Severity Prediction Interpretation Plot')
         st.shap(p)
 

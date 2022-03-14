@@ -35,7 +35,7 @@ def st_shap(plot, height=None):
 
 st.set_page_config(page_title="Deep's Road Traffic Accident Severity Prediction",
                    page_icon="🚦", layout="wide")
-st.image(image,width='always')
+st.image(image,use_column_width='always')
 
 
 
